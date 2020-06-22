@@ -3,13 +3,14 @@ package pl.obol.repository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import pl.obol.model.Book;
+import pl.obol.repository.annotation.JDBC;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Repository
-@Qualifier("JDBC")
+@JDBC
 public class BookJDBCImpl implements IntfBook {
 
     private static final String URL = "jdbc:mysql://localhost:3306/bookStore?serverTimezone=UTC&characterEncoding=utf8";

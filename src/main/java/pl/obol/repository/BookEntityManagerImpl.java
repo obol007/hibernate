@@ -1,15 +1,14 @@
 package pl.obol.repository;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import pl.obol.model.Book;
+import pl.obol.repository.annotation.EntManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Repository
-@Qualifier("EntityManager")
+@EntManager
 public class BookEntityManagerImpl implements IntfBook{
 
     @PersistenceContext

@@ -5,15 +5,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.obol.model.Book;
 import pl.obol.repository.IntfBook;
+import pl.obol.repository.annotation.EntManager;
+import pl.obol.repository.annotation.JDBC;
 
 
 @Service
 @Transactional
 public class BookService {
 
+
     private final IntfBook intfBook;
 
-    public BookService(@Qualifier("JDBC") IntfBook intfBook) {
+    public BookService(@EntManager IntfBook intfBook) {
         this.intfBook = intfBook;
     }
 
