@@ -28,6 +28,12 @@ public class Book {
     @Column(scale = 1, precision = 2)
     private BigDecimal rating;
     private String author;
+
+    @ManyToOne
+//            (cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "publisher")
+    private Publisher publisher;
+
     @Column(name = "created_on")
     private LocalDateTime created;
     @Column(name = "updated_on")

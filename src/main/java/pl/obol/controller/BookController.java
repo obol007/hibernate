@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.obol.model.Book;
+import pl.obol.model.Publisher;
 import pl.obol.service.BookService;
+import pl.obol.service.PublisherService;
 
 
 import java.math.BigDecimal;
@@ -16,18 +18,24 @@ import java.math.BigDecimal;
 public class BookController {
 
     BookService bookService;
+    PublisherService publisherService;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, PublisherService publisherService) {
         this.bookService = bookService;
+        this.publisherService = publisherService;
     }
 
     @GetMapping
     @ResponseBody
     public String addBook() {
+        Publisher publisher = new Publisher();
+        publisher.setName("Znak");
+        publisherService.savePublisher(publisher);
         Book book = new Book();
         book.setAuthor("Sienkiewicz");
         book.setRating(new BigDecimal("9.7"));
         book.setTitle("Krzyżacy");
+        book.setPublisher(publisher);
         bookService.saveBook(book);
         return String.format("Book %s has been saved!", book);
     }
