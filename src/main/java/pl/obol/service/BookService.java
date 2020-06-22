@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.obol.model.Book;
 import pl.obol.repository.IntfBook;
 
-import java.sql.SQLException;
 
 @Service
 @Transactional

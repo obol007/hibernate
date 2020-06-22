@@ -1,22 +1,24 @@
 package pl.obol.model;
 
-import lombok.Data;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "books")
-@ToString(exclude = {"created", "updated"})
+@ToString //(exclude = {"created", "updated"})
 public class Book {
+
+    @Transient
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,11 +35,13 @@ public class Book {
 
     @PrePersist
     public void setDateCreated(){
-        created = LocalDateTime.now();
+        String date = formatter.format(LocalDateTime.now());
+        created = LocalDateTime.parse(date,formatter);
     }
     @PreUpdate
     public void setDateUpdated(){
-        updated = LocalDateTime.now();
+        String date = formatter.format(LocalDateTime.now());
+        updated = LocalDateTime.parse(date,formatter);
     }
 
 

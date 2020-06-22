@@ -3,8 +3,6 @@ package pl.obol.repository;
 
 import pl.obol.model.Book;
 
-import java.sql.SQLException;
-
 public interface IntfBook {
 
     void saveBook(Book book);

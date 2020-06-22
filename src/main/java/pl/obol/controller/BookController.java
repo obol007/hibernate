@@ -10,7 +10,6 @@ import pl.obol.service.BookService;
 
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 
 @Controller
 @RequestMapping("/book")
@@ -48,6 +47,7 @@ public class BookController {
     public String updateBook(@PathVariable long id, @PathVariable String title) {
         Book book = bookService.findById(id);
         book.setTitle(title);
+        book.setDateUpdated(); //optional - to print an updated date
         bookService.update(book);
         return book.toString();
     }
