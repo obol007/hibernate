@@ -27,11 +27,10 @@ public class Book {
     private String title;
     @Column(scale = 1, precision = 2)
     private BigDecimal rating;
-    private String author;
 
     @ManyToOne
 //            (cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "publisher")
+    @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
     @Column(name = "created_on")

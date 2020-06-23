@@ -1,6 +1,5 @@
 package pl.obol.repository;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import pl.obol.model.Book;
 import pl.obol.repository.annotation.JDBC;
@@ -23,13 +22,12 @@ public class BookJDBCImpl implements IntfBook {
     public void saveBook(Book book) {
 
         try(Connection conn = DriverManager.getConnection(URL,USER, PASSWORD)) {
-            String saveSql = "INSERT INTO books (author, book_title, rating, created_on) values (?,?,?,?)";
+            String saveSql = "INSERT INTO books (book_title, rating, created_on) values (?,?,?)";
 
             PreparedStatement preStmt = conn.prepareStatement(saveSql, Statement.RETURN_GENERATED_KEYS);
-            preStmt.setString(1, book.getAuthor());
-            preStmt.setString(2, book.getTitle());
-            preStmt.setBigDecimal(3, book.getRating());
-            preStmt.setString(4, formatter.format(LocalDateTime.now()));
+            preStmt.setString(1, book.getTitle());
+            preStmt.setBigDecimal(1, book.getRating());
+            preStmt.setString(3, formatter.format(LocalDateTime.now()));
             preStmt.executeUpdate();
             ResultSet rs = preStmt.getGeneratedKeys();
             if (rs.next()) {
@@ -53,7 +51,6 @@ public class BookJDBCImpl implements IntfBook {
                 Book book = new Book();
                 book.setId(resultSet.getLong("id"));
                 book.setTitle(resultSet.getString("book_title"));
-                book.setAuthor(resultSet.getString("author"));
                 book.setRating(resultSet.getBigDecimal("rating"));
                 String dateCreated = resultSet.getString("created_on");
                 String dateUpdated = resultSet.getString("updated_on");
@@ -73,13 +70,12 @@ public class BookJDBCImpl implements IntfBook {
 
     @Override
     public void update(Book b) {
-        String updateSql = "UPDATE books SET author=?, rating=?, book_title=?,updated_on=now() WHERE id=?";
+        String updateSql = "UPDATE books SET rating=?, book_title=?,updated_on=now() WHERE id=?";
         try(Connection conn = DriverManager.getConnection(URL,USER,PASSWORD)){
             PreparedStatement stat = conn.prepareStatement(updateSql);
-            stat.setString(1,b.getAuthor());
-            stat.setBigDecimal(2,b.getRating());
-            stat.setString(3,b.getTitle());
-            stat.setInt(4, (int) b.getId());
+            stat.setBigDecimal(1,b.getRating());
+            stat.setString(2,b.getTitle());
+            stat.setInt(3, (int) b.getId());
             stat.executeUpdate();
         }
         catch (SQLException e){

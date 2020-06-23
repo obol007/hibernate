@@ -32,7 +32,6 @@ public class BookController {
         publisher.setName("Znak");
         publisherService.savePublisher(publisher);
         Book book = new Book();
-        book.setAuthor("Sienkiewicz");
         book.setRating(new BigDecimal("9.7"));
         book.setTitle("Krzyżacy");
         book.setPublisher(publisher);
