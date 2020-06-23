@@ -4,9 +4,11 @@ import org.springframework.stereotype.Repository;
 import pl.obol.model.Book;
 import pl.obol.repository.annotation.JDBC;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Repository
 @JDBC
@@ -93,5 +95,15 @@ public class BookJDBCImpl implements IntfBook {
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Book> findAll() {
+        return null;
+    }
+
+    @Override
+    public List<Book> findAllByRating(BigDecimal rating) {
+        return null;
     }
 }

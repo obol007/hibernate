@@ -1,5 +1,7 @@
 package pl.obol.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,17 +14,28 @@ import pl.obol.service.PublisherService;
 
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/book")
 public class BookController {
 
-    BookService bookService;
-    PublisherService publisherService;
 
-    public BookController(BookService bookService, PublisherService publisherService) {
+    private final Logger logger
+            = LoggerFactory.getLogger(BookController.class);
+
+    private final BookService bookService;
+    private final PublisherService publisherService;
+
+
+    public BookController(BookService bookService,
+                          PublisherService publisherService) {
         this.bookService = bookService;
         this.publisherService = publisherService;
+
     }
 
     @GetMapping
@@ -63,5 +76,19 @@ public class BookController {
     public String deleteBook(@PathVariable long id) {
         bookService.delete(bookService.findById(id));
         return "Book deleted!";
+    }
+
+    @GetMapping("/all")
+    @ResponseBody
+    public String findAll(){
+        List<Book> books = bookService.findAll();
+        return String.valueOf(books);
+    }
+//    @GetMapping("/all/{rating:\\d\\.\\d}")
+    @GetMapping("/all/{rating:.+}")
+    @ResponseBody
+    public String findAllByRating(@PathVariable BigDecimal rating){
+        List<Book> books = bookService.findAllByRating(rating);
+        return String.valueOf(books);
     }
 }

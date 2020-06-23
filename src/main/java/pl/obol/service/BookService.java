@@ -8,6 +8,9 @@ import pl.obol.repository.IntfBook;
 import pl.obol.repository.annotation.EntManager;
 import pl.obol.repository.annotation.JDBC;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 
 @Service
 @Transactional
@@ -36,4 +39,11 @@ public class BookService {
         intfBook.delete(book);
     }
 
+    public List<Book> findAll() {
+        return intfBook.findAll();
+    }
+
+    public List<Book> findAllByRating(BigDecimal rating) {
+        return intfBook.findAllByRating(rating);
+    }
 }
