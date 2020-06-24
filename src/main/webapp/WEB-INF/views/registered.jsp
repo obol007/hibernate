@@ -6,8 +6,8 @@
     <title>Registration Confirmation</title>
 </head>
 <body>
-<h1>Student ${student.toString()} has been registered!</h1>
-<h2>Register a new student: <a type="button" href="/form/register">REGISTER</a> </h2>
-<h2>Register a new student: <a type="button" href="/form/register/form">REGISTER FORM</a> </h2>
+<h4>Student ${student.toString()} has been registered!</h4>
+<h5>Register a new student: <a type="button" href="/form/register">REGISTER</a> </h5>
+<h5>Register a new student: <a type="button" href="/form/register/form">REGISTER FORM</a> </h5>
 </body>
 </html>

@@ -7,6 +7,10 @@ import lombok.Setter;
 public class Student {
     private String firstName;
     private String lastName;
+    private String about;
+    private String password;
+    private Language lang;
+    private boolean terms;
 
     public Student() {
     }
@@ -18,6 +22,13 @@ public class Student {
 
     @Override
     public String toString() {
-        return firstName +" " + lastName;
+        return "[" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", about='" + about + '\'' +
+                ", password='" + password + '\'' +
+                ", lang=" + lang + '\''+
+                ", terms=" + terms +
+                ']';
     }
 }
