@@ -11,6 +11,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.*;
+import pl.obol.converter.AuthorConverter;
 import pl.obol.converter.PublisherConverter;
 
 import javax.persistence.EntityManagerFactory;
@@ -67,9 +68,14 @@ public class AppConfig implements WebMvcConfigurer {
     public PublisherConverter getPublisherConverter(){
         return new PublisherConverter();
     }
+    @Bean
+    public AuthorConverter getAuthorConverter(){
+        return new AuthorConverter();
+    }
     @Override
     public void addFormatters(FormatterRegistry registry){
         registry.addConverter(getPublisherConverter());
+        registry.addConverter(getAuthorConverter());
     }
 
 //

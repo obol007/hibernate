@@ -1,13 +1,11 @@
 package pl.obol.model;
 
-import lombok.Generated;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity @Getter @Setter
+@Entity @Getter @Setter @ToString(exclude = "books")
 @Table(name = "authors")
 public class Author {
 
@@ -16,14 +14,26 @@ public class Author {
     private Long id;
     private String name;
 
+    public Author(){}
+    public Author(String name){
+        this.name = name;
+    }
 
-
-
-
-    @ManyToMany
-    @JoinTable(name = "authors_books",
-            joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    @ManyToMany(mappedBy = "authors")
     private List<Book> books;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Author author = (Author) o;
+
+        return name.equals(author.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

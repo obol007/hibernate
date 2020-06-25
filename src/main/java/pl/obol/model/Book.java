@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Entity
 @Getter
@@ -37,6 +38,12 @@ public class Book {
     @Column(name = "updated_on")
     private LocalDateTime updated;
 
+    @ManyToMany //(cascade = CascadeType.ALL)
+    @JoinTable(name = "books_authors",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    private List<Author> authors;
+
     @PrePersist
     public void setDateCreated(){
         String date = formatter.format(LocalDateTime.now());
@@ -47,6 +54,11 @@ public class Book {
         String date = formatter.format(LocalDateTime.now());
         updated = LocalDateTime.parse(date,formatter);
     }
+
+    public void addAuthor(Author a){
+        this.authors.add(a);
+    }
+
 
 
 }

@@ -13,7 +13,13 @@
         <p>Title:
             <form:input path="title"/>
         </p>
-       <p>Publisher:
+        <p>Rating:
+        <form:input path="rating"/>
+        </p>
+        <p>Book author (authors - separate by ',')
+            <form:input path="authors"/>
+        </p>
+       <p>Publisher: <br>
         <form:select path="publisher">
             <form:option label="select a publisher" value="0"/>
             <form:options items="${publishers}" itemValue="id" itemLabel="name"/>

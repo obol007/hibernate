@@ -1,6 +1,7 @@
 package pl.obol.repository;
 
 import org.springframework.stereotype.Repository;
+import pl.obol.model.Author;
 import pl.obol.model.Book;
 import pl.obol.repository.annotation.EntManager;
 
@@ -8,6 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -18,8 +21,24 @@ public class BookEntityManagerImpl implements IntfBook{
     private EntityManager entityManager;
     @Override
     public void saveBook(Book book){
+        List<Author> authors = book.getAuthors();
+        List<Author> finalAuthorsList = new ArrayList<>();
+        for(int i=0; i<authors.size(); i++){
+            Query query = entityManager.createQuery("select a from Author a where a.name = :aName");
+            query.setParameter("aName",authors.get(i).getName());
+            List<Author> resultList = query.getResultList();
+            if(!resultList.isEmpty()){
+                finalAuthorsList.add(resultList.get(0));
+            }else{
+                Author a = authors.get(i);
+                entityManager.persist(a);
+                finalAuthorsList.add(a);
+            }
+        }
+        book.setAuthors(finalAuthorsList);
         entityManager.persist(book);
     }
+    
     @Override
     public Book findById(long id){
         return entityManager.find(Book.class, id);
