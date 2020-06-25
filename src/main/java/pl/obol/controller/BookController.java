@@ -1,94 +1,50 @@
 package pl.obol.controller;
 
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import pl.obol.model.Book;
 import pl.obol.model.Publisher;
 import pl.obol.service.BookService;
 import pl.obol.service.PublisherService;
 
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/book")
 public class BookController {
 
-
-    private final Logger logger
-            = LoggerFactory.getLogger(BookController.class);
-
-    private final BookService bookService;
+    private final Logger logger = LoggerFactory.getLogger(BookController.class);
     private final PublisherService publisherService;
+    private final BookService bookService;
 
-
-    public BookController(BookService bookService,
-                          PublisherService publisherService) {
-        this.bookService = bookService;
+    public BookController(PublisherService publisherService, BookService bookService) {
         this.publisherService = publisherService;
-
+        this.bookService = bookService;
     }
 
-    @GetMapping
-    @ResponseBody
-    public String addBook() {
-        Publisher publisher = new Publisher();
-        publisher.setName("Znak");
-        publisherService.savePublisher(publisher);
-        Book book = new Book();
-        book.setRating(new BigDecimal("9.7"));
-        book.setTitle("Krzyżacy");
-        book.setPublisher(publisher);
+    @ModelAttribute("publishers")
+    public List<Publisher> publishers(){
+        return publisherService.findAll();
+    }
+
+
+    @GetMapping("/add")
+    public String addBook(Model model){
+        model.addAttribute("book", new Book());
+        return "addBook";
+    }
+    @PostMapping("/add")
+    public String saveBook(@ModelAttribute Book book, Model model){
         bookService.saveBook(book);
-        return String.format("Book %s has been saved!", book);
+        model.addAttribute("book",book);
+        return "bookSaved";
     }
 
-    @GetMapping("/{id}")
-    @ResponseBody
-    public String findOne(@PathVariable long id) {
-        return bookService.findById(id).toString();
-    }
 
-    @GetMapping("/store")
-    public String store(){
-        return "bookStore";
-    }
-    @GetMapping("/update/{id}/{title}")
-    @ResponseBody
-    public String updateBook(@PathVariable long id, @PathVariable String title) {
-        Book book = bookService.findById(id);
-        book.setTitle(title);
-        book.setDateUpdated(); //optional - to print an updated date
-        bookService.update(book);
-        return book.toString();
-    }
-    @GetMapping("/delete/{id}")
-    @ResponseBody
-    public String deleteBook(@PathVariable long id) {
-        bookService.delete(bookService.findById(id));
-        return "Book deleted!";
-    }
 
-    @GetMapping("/all")
-    @ResponseBody
-    public String findAll(){
-        List<Book> books = bookService.findAll();
-        return String.valueOf(books);
-    }
-//    @GetMapping("/all/{rating:\\d\\.\\d}")
-    @GetMapping("/all/{rating:.+}")
-    @ResponseBody
-    public String findAllByRating(@PathVariable BigDecimal rating){
-        List<Book> books = bookService.findAllByRating(rating);
-        return String.valueOf(books);
-    }
+
 }

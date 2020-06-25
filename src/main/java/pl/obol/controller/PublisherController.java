@@ -1,12 +1,9 @@
 package pl.obol.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import pl.obol.model.Book;
-import pl.obol.service.BookService;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import pl.obol.model.Publisher;
 import pl.obol.service.PublisherService;
 
 @Controller
@@ -14,21 +11,20 @@ import pl.obol.service.PublisherService;
 public class PublisherController {
 
     PublisherService publisherService;
-    BookService bookService;
 
-    public PublisherController(PublisherService publisherService,
-                               BookService bookService) {
+    public PublisherController(PublisherService publisherService) {
         this.publisherService = publisherService;
-        this.bookService = bookService;
     }
 
-    @GetMapping("/{publisherId}/{bookId}")
-    @ResponseBody
-    public String addBook(@PathVariable("bookId") long bId,
-                          @PathVariable("publisherId") long pId){
-        publisherService.addBookToPublisher(bId,pId);
-        Book book = bookService.findById(bId);
-        return String.format("Book %s added to the Publisher.",book);
-
+    @GetMapping("/add")
+    public String addPublisher(Model model){
+        model.addAttribute("publisher",new Publisher());
+        return "addPublisher";
+    }
+    @PostMapping("/add")
+    public String savePublisher(@ModelAttribute Publisher publisher, Model model){
+        publisherService.savePublisher(publisher);
+        model.addAttribute("publisher",publisher);
+        return "publisherSaved";
     }
 }

@@ -28,8 +28,7 @@ public class Book {
     @Column(scale = 1, precision = 2)
     private BigDecimal rating;
 
-    @ManyToOne
-//            (cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 

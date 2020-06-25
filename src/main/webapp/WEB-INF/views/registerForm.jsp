@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
 </head>
 <body>
-<%@include file="navbar.jsp"%>
+<%@include file="navbar.jsp" %>
 
 <div class="registration">
     <form:form modelAttribute="student" method="post">
@@ -16,8 +16,21 @@
         <p>Language: <form:radiobuttons path="lang"/></p>
         <p>Password: <form:password path="password"/></p>
         <p>About me: <br><form:textarea cols="20" rows="4" path="about"/></p>
-        <p><form:checkbox path="terms" label="I accept terms & conditions"/> </p>
+        <p>Skills<br>
+            Java <form:checkbox path="skills" value="Java"/>
+            Spring <form:checkbox path="skills" value="Spring"/>
+            Hibernate <form:checkbox path="skills" value="Hibernate"/>
+            MySQL <form:checkbox path="skills" value="MySQL"/>
+        </p>
+        <p>Programs: <br>
+            <form:select path="programs">
+                <form:option value="--" label="Select a program" disabled="true"/>
+                <form:options items="${programs}"/>
+            </form:select>
+        </p>
+        <p><form:checkbox path="terms" label="I accept terms & conditions"/></p>
         <p><input type="submit" value="SAVE"></p>
+        <form:errors path="terms"/>
     </form:form>
 </div>
 </body>

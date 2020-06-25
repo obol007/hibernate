@@ -1,3 +1,3 @@
 
 
-insert into publishers (name) values ('Helion');
+insert into publishers (name, city) values ('Helion', 'Gdańsk');

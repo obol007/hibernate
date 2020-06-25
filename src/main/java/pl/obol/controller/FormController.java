@@ -8,12 +8,20 @@ import org.springframework.web.bind.annotation.*;
 import pl.obol.model.Student;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/form")
 public class FormController {
 
     private final Logger logger = LoggerFactory.getLogger(FormController.class);
+
+    @ModelAttribute("programs")
+    public List<String> languages(){
+        return Arrays.asList("word","excel","notepad","windows");
+    }
 
     @GetMapping("/search")
     public String showForm() {

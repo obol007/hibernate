@@ -5,5 +5,7 @@
 </head>
 <body>
 <p>Welcome home!</p>
+<p><a href="/publisher/add">Add a publisher</a></p>
+<p><a href="/book/add">Add a book</a></p>
 </body>
 </html>

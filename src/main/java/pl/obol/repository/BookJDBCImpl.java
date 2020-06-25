@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@Repository
+//@Repository
 @JDBC
 public class BookJDBCImpl implements IntfBook {
 

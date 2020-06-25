@@ -16,9 +16,12 @@ public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private String name;
+    private String city;
 
     @OneToMany (mappedBy = "publisher")
     private List<Book> book = new ArrayList<>();
+
+
 }
