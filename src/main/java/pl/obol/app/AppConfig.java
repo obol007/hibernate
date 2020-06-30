@@ -10,14 +10,19 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.servlet.LocaleContextResolver;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import pl.obol.converter.AuthorConverter;
 import pl.obol.converter.PublisherConverter;
 
 import javax.persistence.EntityManagerFactory;
+import javax.validation.Validator;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
@@ -33,12 +38,13 @@ public class AppConfig implements WebMvcConfigurer {
         entityManagerFactoryBean.setPersistenceUnitName("bookstorePersistenceUnit");
         return entityManagerFactoryBean;
     }
+
     @Bean
     public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 
-        @Override
+    @Override
     public void configureDefaultServletHandling(
             DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
@@ -65,24 +71,32 @@ public class AppConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public PublisherConverter getPublisherConverter(){
+    public PublisherConverter getPublisherConverter() {
         return new PublisherConverter();
     }
+
     @Bean
-    public AuthorConverter getAuthorConverter(){
+    public AuthorConverter getAuthorConverter() {
         return new AuthorConverter();
     }
+
     @Override
-    public void addFormatters(FormatterRegistry registry){
+    public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(getPublisherConverter());
         registry.addConverter(getAuthorConverter());
     }
 
-//
-//    @Bean(name="localeResolver")
-//    public LocaleContextResolver getLocaleContextResolver() {
-//        SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-//        localeResolver.setDefaultLocale(new Locale("pl","PL"));
-//        return localeResolver; }
+    //Okraślamy domyślny język komunikatów
+    @Bean(name = "localeResolver")
+    public LocaleContextResolver getLocaleContextResolver() {
+        SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+        localeResolver.setDefaultLocale(new Locale("pl", "PL"));
+        return localeResolver;
+    }
+
+    @Bean
+    public Validator validator() {
+        return new LocalValidatorFactoryBean();
+    }
 
 }

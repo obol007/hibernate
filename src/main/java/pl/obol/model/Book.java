@@ -6,6 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,9 +27,19 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    //definicja tabeli
     @Column(name = "book_title", nullable = false, length = 100)
+    //walidacja
+    @Size(min = 2, max = 40)
     private String title;
-    @Column(scale = 1, precision = 2)
+
+
+    //definicja tabeli
+    @Column(scale = 1, precision = 3)
+    //walidacja
+    @DecimalMax("10")
+    @DecimalMin("0")
     private BigDecimal rating;
 
     @ManyToOne(fetch = FetchType.EAGER)

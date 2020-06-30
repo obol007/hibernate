@@ -1,6 +1,5 @@
 package pl.obol.controller;
 
-import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -11,17 +10,22 @@ import pl.obol.model.Publisher;
 import pl.obol.service.BookService;
 import pl.obol.service.PublisherService;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/book")
 public class BookController {
 
+    private final Validator validator;
     private final Logger logger = LoggerFactory.getLogger(BookController.class);
     private final PublisherService publisherService;
     private final BookService bookService;
 
-    public BookController(PublisherService publisherService, BookService bookService) {
+    public BookController(Validator validator, PublisherService publisherService, BookService bookService) {
+        this.validator = validator;
         this.publisherService = publisherService;
         this.bookService = bookService;
     }
@@ -39,8 +43,16 @@ public class BookController {
     }
     @PostMapping("/add")
     public String saveBook(@ModelAttribute Book book, Model model){
-        bookService.saveBook(book);
-        model.addAttribute("book",book);
+        Set<ConstraintViolation<Book>> validate = validator.validate(book);
+        if(!validate.isEmpty()) {
+            for(ConstraintViolation<Book> violation: validate){
+                System.out.println(violation.getPropertyPath() + " " + violation.getMessage());
+            }
+        }
+        else {
+            bookService.saveBook(book);
+            model.addAttribute("book", book);
+        }
         return "bookSaved";
     }
 

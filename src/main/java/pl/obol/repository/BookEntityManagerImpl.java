@@ -38,7 +38,7 @@ public class BookEntityManagerImpl implements IntfBook{
         book.setAuthors(finalAuthorsList);
         entityManager.persist(book);
     }
-    
+
     @Override
     public Book findById(long id){
         return entityManager.find(Book.class, id);
