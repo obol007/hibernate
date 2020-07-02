@@ -1,12 +1,10 @@
 package pl.obol.service;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.obol.model.Book;
 import pl.obol.repository.IntfBook;
-import pl.obol.repository.annotation.EntManager;
-import pl.obol.repository.annotation.JDBC;
+import pl.obol.annotation.EntManager;
 
 import java.math.BigDecimal;
 import java.util.List;

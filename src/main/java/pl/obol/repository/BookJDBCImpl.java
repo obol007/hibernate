@@ -1,8 +1,7 @@
 package pl.obol.repository;
 
-import org.springframework.stereotype.Repository;
 import pl.obol.model.Book;
-import pl.obol.repository.annotation.JDBC;
+import pl.obol.annotation.JDBC;
 
 import java.math.BigDecimal;
 import java.sql.*;

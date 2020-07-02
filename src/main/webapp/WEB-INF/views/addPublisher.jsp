@@ -9,10 +9,11 @@
 
 <div class="registration">
     <h5>Add a publisher</h5>
-    <form:form modelAttribute="publisher">
+    <form:form modelAttribute="newPublisher">
         <p>Publisher's name: <form:input path="name"/>
-            <form:errors path="name"/></p>
-        <p>City: <form:input path="city"/></p>
+            <br> <form:errors path="name" cssClass="error" element="div"/></p>
+        <p>City: <form:input path="city"/>
+            <br> <form:errors path="city"/></p>
         <input class="submit" type="submit" value="SAVE">
     </form:form>
 </div>

@@ -1,4 +1,4 @@
-package pl.obol.repository.annotation;
+package pl.obol.annotation;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 

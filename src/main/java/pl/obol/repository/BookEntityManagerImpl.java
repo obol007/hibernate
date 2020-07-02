@@ -3,14 +3,13 @@ package pl.obol.repository;
 import org.springframework.stereotype.Repository;
 import pl.obol.model.Author;
 import pl.obol.model.Book;
-import pl.obol.repository.annotation.EntManager;
+import pl.obol.annotation.EntManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Repository

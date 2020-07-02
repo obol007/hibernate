@@ -43,9 +43,9 @@ public class BookController {
     }
     @PostMapping("/add")
     public String saveBook(@ModelAttribute Book book, Model model){
-        Set<ConstraintViolation<Book>> validate = validator.validate(book);
-        if(!validate.isEmpty()) {
-            for(ConstraintViolation<Book> violation: validate){
+        Set<ConstraintViolation<Book>> violations = validator.validate(book);
+        if(!violations.isEmpty()) {
+            for(ConstraintViolation<Book> violation: violations){
                 System.out.println(violation.getPropertyPath() + " " + violation.getMessage());
             }
         }
