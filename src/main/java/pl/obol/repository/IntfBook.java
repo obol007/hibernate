@@ -2,6 +2,7 @@ package pl.obol.repository;
 
 
 import pl.obol.model.Book;
+import pl.obol.model.Proposition;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,4 +20,6 @@ public interface IntfBook {
     List<Book> findAll();
 
     List<Book> findAllByRating(BigDecimal rating);
+
+    void saveProposition(Proposition proposition);
 }

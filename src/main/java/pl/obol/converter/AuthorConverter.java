@@ -10,6 +10,7 @@ public class AuthorConverter implements Converter<String, List<Author>> {
     @Override
 
     public List<Author> convert(String s) {
+        if(s.isEmpty()) return null;
         String[] authors = s.split(",");
         List<Author> authorList = new ArrayList<>();
         for(String a: authors){

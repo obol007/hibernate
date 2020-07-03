@@ -4,11 +4,12 @@ package pl.obol.model;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import pl.obol.validator.BookValidation;
+import pl.obol.validator.PropositionValidation;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+import javax.validation.groups.Default;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -31,19 +32,22 @@ public class Book {
     //definicja tabeli
     @Column(name = "book_title", nullable = false, length = 100)
     //walidacja
-    @Size(min = 2, max = 40)
+    @Size(min = 2, max = 40, groups = {PropositionValidation.class, BookValidation.class})
     private String title;
 
+    private Boolean proposition = false;
 
     //definicja tabeli
     @Column(scale = 1, precision = 3)
     //walidacja
     @DecimalMax("10")
     @DecimalMin("0")
+    @NotNull(groups = {BookValidation.class})
     private BigDecimal rating;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "publisher_id")
+    @NotNull(groups = {BookValidation.class})
     private Publisher publisher;
 
     @Column(name = "created_on")
@@ -55,6 +59,7 @@ public class Book {
     @JoinTable(name = "books_authors",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
+    @NotNull(groups = {BookValidation.class})
     private List<Author> authors;
 
     @PrePersist

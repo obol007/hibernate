@@ -1,6 +1,4 @@
-package pl.obol.annotation;
-
-import pl.obol.validator.StartsWithValidator;
+package pl.obol.validator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

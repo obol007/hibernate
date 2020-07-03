@@ -3,6 +3,8 @@ package pl.obol.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity @Getter @Setter @ToString(exclude = "books")

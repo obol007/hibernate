@@ -1,7 +1,5 @@
 package pl.obol.validator;
 
-import pl.obol.annotation.StartsWith;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

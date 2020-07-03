@@ -3,6 +3,7 @@ package pl.obol.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.obol.model.Book;
+import pl.obol.model.Proposition;
 import pl.obol.repository.IntfBook;
 import pl.obol.annotation.EntManager;
 
@@ -43,5 +44,9 @@ public class BookService {
 
     public List<Book> findAllByRating(BigDecimal rating) {
         return intfBook.findAllByRating(rating);
+    }
+
+    public void saveProposition(Proposition proposition){
+        intfBook.saveProposition(proposition);
     }
 }

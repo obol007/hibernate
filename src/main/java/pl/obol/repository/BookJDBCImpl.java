@@ -2,6 +2,7 @@ package pl.obol.repository;
 
 import pl.obol.model.Book;
 import pl.obol.annotation.JDBC;
+import pl.obol.model.Proposition;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -104,5 +105,9 @@ public class BookJDBCImpl implements IntfBook {
     @Override
     public List<Book> findAllByRating(BigDecimal rating) {
         return null;
+    }
+
+    @Override
+    public void saveProposition(Proposition proposition) {
     }
 }
