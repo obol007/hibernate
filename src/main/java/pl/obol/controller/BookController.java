@@ -55,12 +55,6 @@ public class BookController {
                                        Book book, BindingResult result, Model model) {
         if (book.getProposition()) {
             Set<ConstraintViolation<Book>> titleViolation = validator.validate(book, PropositionValidation.class);
-            if (!titleViolation.isEmpty()) {
-                for (ConstraintViolation<Book> violation : titleViolation) {
-                    System.out.println("Proposition: " + violation.getPropertyPath() + " " + violation.getMessage());
-
-                }
-            }
             if (titleViolation.isEmpty()) {
                 Proposition p = new Proposition();
                 p.setTitle(book.getTitle());
@@ -68,6 +62,10 @@ public class BookController {
                 model.addAttribute("book", p);
                 return "bookSaved";
             } else {
+                //only for printing purpose
+                for (ConstraintViolation<Book> violation : titleViolation) {
+                    System.out.println("Proposition: " + violation.getPropertyPath() + " " + violation.getMessage());
+                }
                 return "addBook";
             }
         } else {

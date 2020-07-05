@@ -3,6 +3,7 @@ package pl.obol.app;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -28,6 +29,7 @@ import java.util.Locale;
 @EnableWebMvc
 @ComponentScan(basePackages = "pl.obol")
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "pl.obol.repository")
 public class AppConfig implements WebMvcConfigurer {
 
     @Bean

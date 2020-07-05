@@ -21,5 +21,4 @@ public interface IntfBook {
 
     List<Book> findAllByRating(BigDecimal rating);
 
-    void saveProposition(Proposition proposition);
 }

@@ -8,7 +8,7 @@
 <body>
 
 <div class="registration">
-    Book ${book} has been saved!
+    ${book} has been saved!
 </div>
 <div class="registration">
     <p><a href="${pageContext.request.contextPath}/book/add">Add a new book!</a></p>

@@ -22,26 +22,23 @@ public class BookEntityManagerImpl implements IntfBook {
 
     @Override
     public void saveBook(Book book) {
-        if (!book.getProposition()) {
-            List<Author> authors = book.getAuthors();
-            List<Author> finalAuthorsList = new ArrayList<>();
-            for (int i = 0; i < authors.size(); i++) {
-                Query query = entityManager.createQuery("select a from Author a where a.name = :aName");
-                query.setParameter("aName", authors.get(i).getName());
-                List<Author> resultList = query.getResultList();
-                if (!resultList.isEmpty()) {
-                    finalAuthorsList.add(resultList.get(0));
-                } else {
-                    Author a = authors.get(i);
-                    entityManager.persist(a);
-                    finalAuthorsList.add(a);
-                }
-            }
-            book.setAuthors(finalAuthorsList);
-        }
+//        List<Author> authors = book.getAuthors();
+//        List<Author> finalAuthorsList = new ArrayList<>();
+//        for (int i = 0; i < authors.size(); i++) {
+//            Query query = entityManager.createQuery("select a from Author a where a.name = :aName");
+//            query.setParameter("aName", authors.get(i).getName());
+//            List<Author> resultList = query.getResultList();
+//            if (!resultList.isEmpty()) {
+//                finalAuthorsList.add(resultList.get(0));
+//            } else {
+//                Author a = authors.get(i);
+//                entityManager.persist(a);
+//                finalAuthorsList.add(a);
+//            }
+//        }
+//        book.setAuthors(finalAuthorsList);
         entityManager.persist(book);
     }
-
 
 
     @Override
@@ -72,8 +69,5 @@ public class BookEntityManagerImpl implements IntfBook {
         return query.getResultList();
     }
 
-    @Override
-    public void saveProposition(Proposition proposition) {
-        entityManager.persist(proposition);
-    }
+
 }

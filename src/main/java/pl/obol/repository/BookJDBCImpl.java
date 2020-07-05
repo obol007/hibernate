@@ -107,7 +107,6 @@ public class BookJDBCImpl implements IntfBook {
         return null;
     }
 
-    @Override
-    public void saveProposition(Proposition proposition) {
-    }
+
+
 }
